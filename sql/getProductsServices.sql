@@ -2,6 +2,7 @@ select
 t.BDCODPROD, -- codigo produto
 t.BDCODTIPOSER, -- tipo servico
 t.BDDESCPROD, -- NOME PRODUTO
+t.BDCODSAIDA, -- CFOP
 t.BDCODCSTPISENT, --cst pis entrada
 t.BDCODCSTCOFENT, --cst cofins entrada
 t.BDCODCSTPISSAI, --cst pis saida
