@@ -1,1 +1,5 @@
-select * from TCIDADE c where c.BDCODUF = :coduf;
+select
+c.BDCODCID,
+c.BDCODUF,
+c.BDNOMCID
+from TCIDADE c where c.BDCODUF = :coduf;
