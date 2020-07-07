@@ -13,5 +13,5 @@ t.BDALIQICMSST,    --aliquota icms st
 t.*
 from TCADPRO_VINC t
 where
-t.BDCODEMP = 331 --:enterprise --empresa
-and t.BDCODTIPOSER = :codTypeService --:serviceType -- tipo de serviço
+t.BDCODEMP = :enterpriseCode --:enterprise --empresa
+and t.BDCODTIPOSER = :typeServiceCode --:serviceType -- tipo de serviço
