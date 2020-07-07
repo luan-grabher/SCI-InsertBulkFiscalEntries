@@ -36,7 +36,9 @@ public class Services_Model {
         for (String[] databaseService : databaseServices) {
             Service service = new Service();
             service.setCode(Integer.valueOf(databaseService[0]));
+            service.setType(Integer.valueOf(databaseService[1]));
             service.setName(databaseService[2]);
+            service.setCfop(Integer.valueOf(databaseService[3]));
 
             services.put(service.getName(), service);
         }
