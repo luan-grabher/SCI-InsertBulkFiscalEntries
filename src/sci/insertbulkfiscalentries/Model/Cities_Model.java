@@ -12,7 +12,7 @@ public class Cities_Model {
 
     private Map<String, City> cities = new HashMap<>();
 
-    public Map<String, City> getStatesFromDb(Integer stateCode) {
+    public Map<String, City> getStateCitiesFromDb(Integer stateCode) {
         //clear map
         cities.clear();
 

@@ -25,7 +25,7 @@ public class Services_Model {
         services.clear();
 
         //Get SQl Script
-        File sqlFile = fileManager.FileManager.getFile("sql/getProductServices.sql");
+        File sqlFile = fileManager.FileManager.getFile("sql/getProductsServices.sql");
         Map<String, String> sqlChanges = new HashMap<>();
         sqlChanges.put("enterpriseCode", enterpriseCode.toString());
         sqlChanges.put("typeServiceCode", Env.get("typeServiceCode"));
@@ -34,13 +34,16 @@ public class Services_Model {
         ArrayList<String[]> databaseServices = Database.getDatabase().select(sqlFile, sqlChanges);
 
         for (String[] databaseService : databaseServices) {
-            Service service = new Service();
-            service.setCode(Integer.valueOf(databaseService[0]));
-            service.setType(Integer.valueOf(databaseService[1]));
-            service.setName(databaseService[2]);
-            service.setCfop(Integer.valueOf(databaseService[3]));
+            try{
+                Service service = new Service();
+                service.setCode(Integer.valueOf(databaseService[0]));
+                service.setType(Integer.valueOf(databaseService[1]));
+                service.setName(databaseService[2]);
+                service.setCfop(Integer.valueOf(databaseService[3]));
 
-            services.put(service.getName(), service);
+                services.put(service.getName(), service);
+            }catch(Exception e){                
+            }
         }
 
         return services;
