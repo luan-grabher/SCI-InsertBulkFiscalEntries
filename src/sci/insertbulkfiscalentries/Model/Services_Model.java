@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import sci.insertbulkfiscalentries.Model.Entities.Service;
 import sql.Database;
 
@@ -46,6 +47,9 @@ public class Services_Model {
             }
         }
 
+        //SortMap by key
+        services = new TreeMap<>(services);
+        
         return services;
     }
 }
