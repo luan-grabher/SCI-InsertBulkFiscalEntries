@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import sci.insertbulkfiscalentries.Model.Entities.City;
 import sql.Database;
 
@@ -35,6 +36,9 @@ public class Cities_Model {
             cities.put(city.getName(), city);
         }
 
+        //Sort results
+        cities = new TreeMap<>(cities);
+        
         return cities;
     }
 

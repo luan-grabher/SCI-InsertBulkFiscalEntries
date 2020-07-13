@@ -27,7 +27,7 @@ public class Home extends javax.swing.JFrame {
     private Map<String, Service> services;
     private Map<String, State> states;
     private Map<String, City> cities;
-    
+
     /**
      * Creates new form Home
      */
@@ -40,7 +40,7 @@ public class Home extends javax.swing.JFrame {
 
     public void setServicesList() {
         servicesList.removeAllItems();
-        
+
         Services_Model model = new Services_Model();
         services = model.getDatabaseServices(enterpriseCode);
         for (Map.Entry<String, Service> entry : services.entrySet()) {
@@ -53,7 +53,7 @@ public class Home extends javax.swing.JFrame {
 
     public void setStatesList() {
         statesList.removeAllItems();
-        
+
         States_Model model = new States_Model();
         states = model.getStatesFromDb();
         for (Map.Entry<String, State> entry : states.entrySet()) {
@@ -62,11 +62,13 @@ public class Home extends javax.swing.JFrame {
 
             statesList.addItem(name);
         }
+
+        statesList.setSelectedItem("Rio Grande do Sul");
     }
 
     public void setCitiesList() {
         citiesList.removeAllItems();
-        
+
         Cities_Model model = new Cities_Model();
         cities = model.getStateCitiesFromDb(states.get(statesList.getSelectedItem().toString()).getCode());
         for (Map.Entry<String, City> entry : cities.entrySet()) {
@@ -74,6 +76,10 @@ public class Home extends javax.swing.JFrame {
             City city = entry.getValue();
 
             citiesList.addItem(name);
+        }
+
+        if (statesList.getSelectedItem().equals("Rio Grande do Sul")) {
+            citiesList.setSelectedItem("Porto Alegre");
         }
     }
 
@@ -122,12 +128,14 @@ public class Home extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         deleteRow = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        description = new javax.swing.JTextField();
         titulo3 = new javax.swing.JLabel();
+        description = new javax.swing.JTextField();
+        titulo8 = new javax.swing.JLabel();
+        date = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SCI - Gerar arquivo de Importação de NFs de Serviço");
+        setBackground(new java.awt.Color(60, 62, 65));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("homeFrame"); // NOI18N
 
@@ -136,6 +144,8 @@ public class Home extends javax.swing.JFrame {
         titulo.setLabelFor(cnpj);
         titulo.setText("CNPJ");
 
+        cnpj.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cnpj.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         cnpj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cnpjActionPerformed(evt);
@@ -155,9 +165,10 @@ public class Home extends javax.swing.JFrame {
 
         titulo2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo2.setLabelFor(cnpj);
+        titulo2.setLabelFor(nf);
         titulo2.setText("Número NF");
 
+        nf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nfActionPerformed(evt);
@@ -166,7 +177,7 @@ public class Home extends javax.swing.JFrame {
 
         titulo4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         titulo4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo4.setLabelFor(cnpj);
+        titulo4.setLabelFor(value);
         titulo4.setText("Valor");
 
         servicesList.addActionListener(new java.awt.event.ActionListener() {
@@ -177,10 +188,11 @@ public class Home extends javax.swing.JFrame {
 
         titulo5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         titulo5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo5.setLabelFor(cnpj);
+        titulo5.setLabelFor(servicesList);
         titulo5.setText("Serviço");
 
         value.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        value.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         statesList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,15 +237,14 @@ public class Home extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "CNPJ", "NF", "Descrição", "Valor", "Serviço", "Estado", "Cidade"
+                "CNPJ", "NF", "Data", "Descrição", "Valor", "Serviço", "Estado", "Cidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -252,36 +263,25 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        titulo3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        titulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo3.setLabelFor(description);
+        titulo3.setText("Descrição");
+
+        description.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         description.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 descriptionActionPerformed(evt);
             }
         });
 
-        titulo3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        titulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo3.setLabelFor(description);
-        titulo3.setText("Descrição");
+        titulo8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        titulo8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo8.setLabelFor(servicesList);
+        titulo8.setText("Data (dd/mm/aaaa)");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(description, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(titulo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(titulo3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        date.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,15 +306,21 @@ public class Home extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(nf)
                                     .addComponent(titulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(description, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                    .addComponent(titulo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(22, 22, 22)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(titulo4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(value, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(value, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                                    .addComponent(titulo4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(date)
+                                    .addComponent(titulo8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(59, 59, 59)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(servicesList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(titulo5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -326,7 +332,7 @@ public class Home extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(citiesList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(titulo7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 198, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(725, 725, 725)
                                 .addComponent(generateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -340,7 +346,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(titulo1, javax.swing.GroupLayout.DEFAULT_SIZE, 1336, Short.MAX_VALUE)
+                    .addComponent(titulo1, javax.swing.GroupLayout.DEFAULT_SIZE, 1406, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -348,36 +354,50 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(titulo)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cnpjSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(titulo2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(nf, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(titulo4)
-                                .addComponent(titulo5))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(servicesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(titulo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cnpjSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(titulo2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(nf, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(titulo3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(titulo6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(titulo7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(citiesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(value, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(titulo8)
+                                    .addComponent(titulo4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(titulo5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(servicesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(value, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(titulo7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(citiesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(titulo6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(statesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(generateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -387,7 +407,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -398,10 +418,6 @@ public class Home extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cnpjActionPerformed
 
     private void cnpjSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjSearchActionPerformed
         // TODO add your handling code here:
@@ -430,8 +446,59 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_citiesListActionPerformed
 
     private void addToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToListActionPerformed
-        // TODO add your handling code here:
+        try {
+            //Verifica se tem algum item vazio
+            if (!cnpj.getText().equals("")
+                    & !nf.getText().equals("")
+                    & !description.getText().equals("")
+                    & !value.getValue().toString().equals("")
+                    & !date.getValue().toString().equals("")
+                    & !servicesList.getSelectedItem().toString().equals("")
+                    & !statesList.getSelectedItem().toString().equals("")
+                    & !citiesList.getSelectedItem().toString().equals("")) {
+                //Verifica se NF já existe para aquele CNPJ
+                if(!ifCnpjNfOnTable(cnpj.getText(), nf.getText())){
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.addRow(new Object[]{
+                        cnpj.getText(),
+                        nf.getText(),
+                        date.getText(),
+                        description.getText(),
+                        value.getValue(),
+                        servicesList.getSelectedItem().toString(),
+                        statesList.getSelectedItem().toString(),
+                        citiesList.getSelectedItem().toString()
+                    });
+                }else{
+                    JOptionPane.showMessageDialog(this, "Já existe esta NF para este CNPJ!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum campo pode ficar em branco!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Nenhum campo pode ficar em branco!");
+        }
     }//GEN-LAST:event_addToListActionPerformed
+
+    private boolean ifCnpjNfOnTable(String cnpjSearched, String nfSearched) {
+        // Get row and column count
+        int rowCount = table.getRowCount();
+        int cnpjCollumn = 0;
+        int nfCollumn = 1;
+        
+        //Unify
+        String cnpjnf = cnpjSearched + nfSearched;
+
+        // Check all entries
+        for (int i = 0; i < rowCount; i++) {
+            String rowValue = table.getValueAt(i, cnpjCollumn).toString() + table.getValueAt(i, nfCollumn).toString();
+            if(rowValue.equalsIgnoreCase(cnpjnf)){
+                return true;
+            }
+        }
+        return false;
+
+    }
 
     private void generateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateFileActionPerformed
         // TODO add your handling code here:
@@ -443,8 +510,13 @@ public class Home extends javax.swing.JFrame {
 
         if (rowNumber > -1) {
             ((DefaultTableModel) table.getModel()).removeRow(rowNumber);
+            table.setRowSelectionInterval(0, 0);
         }
     }//GEN-LAST:event_deleteRowActionPerformed
+
+    private void cnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cnpjActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,10 +558,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> citiesList;
     private javax.swing.JTextField cnpj;
     private javax.swing.JButton cnpjSearch;
+    private javax.swing.JFormattedTextField date;
     private javax.swing.JButton deleteRow;
     private javax.swing.JTextField description;
     private javax.swing.JButton generateFile;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -505,6 +577,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel titulo5;
     private javax.swing.JLabel titulo6;
     private javax.swing.JLabel titulo7;
+    private javax.swing.JLabel titulo8;
     private javax.swing.JFormattedTextField value;
     // End of variables declaration//GEN-END:variables
 }
