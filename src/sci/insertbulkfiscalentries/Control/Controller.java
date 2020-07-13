@@ -35,6 +35,8 @@ public class Controller {
         @Override
         public void run() {
             enterprise = userInputs.getEnterpriseCode();
+            frame.setEnterpriseCode(enterprise);
+            frame.setServicesList();
         }
 
     }

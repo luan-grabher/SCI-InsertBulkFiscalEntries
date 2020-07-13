@@ -5,26 +5,49 @@
  */
 package sci.insertbulkfiscalentries.View;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import java.awt.Color;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
+import sci.insertbulkfiscalentries.Model.Entities.Service;
+import sci.insertbulkfiscalentries.Model.Services_Model;
 
 /**
  *
  * @author TI01
  */
 public class Home extends javax.swing.JFrame {
-
+    private Integer enterpriseCode;
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        setTheme();
+    }
+    
+    public void setServicesList(){
+        Services_Model model = new Services_Model();
+        Map<String, Service> services =  model.getDatabaseServices(enterpriseCode);
+        for (Map.Entry<String, Service> entry : services.entrySet()) {
+            String name = entry.getKey();
+            Service service = entry.getValue();
+            
+            servicesList.addItem(name);
+        }        
+    }
+    
+    private void setTheme(){
         try {
-            javax.swing.UIManager.setLookAndFeel("Windows");           
+            javax.swing.UIManager.setLookAndFeel("Windows");         
         } catch (Exception e) {
         }
-        
+    }
+
+    public Integer getEnterpriseCode() {
+        return enterpriseCode;
+    }
+
+    public void setEnterpriseCode(Integer enterpriseCode) {
+        this.enterpriseCode = enterpriseCode;
     }
 
     /**
@@ -46,12 +69,12 @@ public class Home extends javax.swing.JFrame {
         titulo3 = new javax.swing.JLabel();
         description = new javax.swing.JTextField();
         titulo4 = new javax.swing.JLabel();
-        service = new javax.swing.JComboBox<>();
+        servicesList = new javax.swing.JComboBox<>();
         titulo5 = new javax.swing.JLabel();
         value = new javax.swing.JFormattedTextField();
-        state = new javax.swing.JComboBox<>();
+        statesList = new javax.swing.JComboBox<>();
         titulo6 = new javax.swing.JLabel();
-        city = new javax.swing.JComboBox<>();
+        citiesList = new javax.swing.JComboBox<>();
         titulo7 = new javax.swing.JLabel();
         addToList = new javax.swing.JButton();
         generateFile = new javax.swing.JButton();
@@ -115,9 +138,9 @@ public class Home extends javax.swing.JFrame {
         titulo4.setLabelFor(cnpj);
         titulo4.setText("Valor");
 
-        service.addActionListener(new java.awt.event.ActionListener() {
+        servicesList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                serviceActionPerformed(evt);
+                servicesListActionPerformed(evt);
             }
         });
 
@@ -128,9 +151,9 @@ public class Home extends javax.swing.JFrame {
 
         value.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
-        state.addActionListener(new java.awt.event.ActionListener() {
+        statesList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stateActionPerformed(evt);
+                statesListActionPerformed(evt);
             }
         });
 
@@ -139,9 +162,9 @@ public class Home extends javax.swing.JFrame {
         titulo6.setLabelFor(cnpj);
         titulo6.setText("Estado");
 
-        city.addActionListener(new java.awt.event.ActionListener() {
+        citiesList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityActionPerformed(evt);
+                citiesListActionPerformed(evt);
             }
         });
 
@@ -234,17 +257,17 @@ public class Home extends javax.swing.JFrame {
                             .addComponent(value, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(service, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(servicesList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(titulo5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(state, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(statesList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(titulo6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(generateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(city, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(citiesList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(titulo7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -283,15 +306,15 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(titulo4)
                                 .addComponent(titulo5))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(service, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(servicesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titulo6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(statesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titulo7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(citiesList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titulo3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -336,17 +359,17 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_descriptionActionPerformed
 
-    private void serviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceActionPerformed
+    private void servicesListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicesListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_serviceActionPerformed
+    }//GEN-LAST:event_servicesListActionPerformed
 
-    private void stateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateActionPerformed
+    private void statesListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statesListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_stateActionPerformed
+    }//GEN-LAST:event_statesListActionPerformed
 
-    private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
+    private void citiesListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cityActionPerformed
+    }//GEN-LAST:event_citiesListActionPerformed
 
     private void addToListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToListActionPerformed
         // TODO add your handling code here:
@@ -402,7 +425,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToList;
-    private javax.swing.JComboBox<String> city;
+    private javax.swing.JComboBox<String> citiesList;
     private javax.swing.JTextField cnpj;
     private javax.swing.JButton cnpjSearch;
     private javax.swing.JButton deleteRow;
@@ -412,8 +435,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField nf;
-    private javax.swing.JComboBox<String> service;
-    private javax.swing.JComboBox<String> state;
+    private javax.swing.JComboBox<String> servicesList;
+    private javax.swing.JComboBox<String> statesList;
     private javax.swing.JTable table;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
