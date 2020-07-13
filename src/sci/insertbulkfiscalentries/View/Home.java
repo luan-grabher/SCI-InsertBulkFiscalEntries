@@ -8,40 +8,78 @@ package sci.insertbulkfiscalentries.View;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sci.insertbulkfiscalentries.Model.Cities_Model;
+import sci.insertbulkfiscalentries.Model.Entities.City;
 import sci.insertbulkfiscalentries.Model.Entities.Service;
+import sci.insertbulkfiscalentries.Model.Entities.State;
 import sci.insertbulkfiscalentries.Model.Services_Model;
+import sci.insertbulkfiscalentries.Model.States_Model;
 
 /**
  *
  * @author TI01
  */
 public class Home extends javax.swing.JFrame {
+
     private Integer enterpriseCode;
+    private Map<String, Service> services;
+    private Map<String, State> states;
+    private Map<String, City> cities;
+    
     /**
      * Creates new form Home
      */
-    public Home() {                
+    public Home() {
         initComponents();
-        setTheme();                
-        
+        setTheme();
+
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
-    
-    public void setServicesList(){
+
+    public void setServicesList() {
+        servicesList.removeAllItems();
+        
         Services_Model model = new Services_Model();
-        Map<String, Service> services =  model.getDatabaseServices(enterpriseCode);        
+        services = model.getDatabaseServices(enterpriseCode);
         for (Map.Entry<String, Service> entry : services.entrySet()) {
             String name = entry.getKey();
             Service service = entry.getValue();
-            
+
             servicesList.addItem(name);
-        }        
+        }
     }
-    
-    private void setTheme(){
+
+    public void setStatesList() {
+        statesList.removeAllItems();
+        
+        States_Model model = new States_Model();
+        states = model.getStatesFromDb();
+        for (Map.Entry<String, State> entry : states.entrySet()) {
+            String name = entry.getKey();
+            State state = entry.getValue();
+
+            statesList.addItem(name);
+        }
+    }
+
+    public void setCitiesList() {
+        citiesList.removeAllItems();
+        
+        Cities_Model model = new Cities_Model();
+        cities = model.getStateCitiesFromDb(states.get(statesList.getSelectedItem().toString()).getCode());
+        for (Map.Entry<String, City> entry : cities.entrySet()) {
+            String name = entry.getKey();
+            City city = entry.getValue();
+
+            citiesList.addItem(name);
+        }
+    }
+
+    private void setTheme() {
         try {
-            javax.swing.UIManager.setLookAndFeel("Windows");         
+            javax.swing.UIManager.setLookAndFeel("Windows");
         } catch (Exception e) {
         }
     }
@@ -382,7 +420,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_servicesListActionPerformed
 
     private void statesListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statesListActionPerformed
-        // TODO add your handling code here:
+        if (statesList.getItemCount() > 0) {
+            setCitiesList();
+        }
     }//GEN-LAST:event_statesListActionPerformed
 
     private void citiesListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesListActionPerformed
@@ -402,7 +442,7 @@ public class Home extends javax.swing.JFrame {
         Integer rowNumber = table.getSelectedRow();
 
         if (rowNumber > -1) {
-            ((DefaultTableModel)table.getModel()).removeRow(rowNumber);
+            ((DefaultTableModel) table.getModel()).removeRow(rowNumber);
         }
     }//GEN-LAST:event_deleteRowActionPerformed
 

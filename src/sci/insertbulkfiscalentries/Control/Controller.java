@@ -35,8 +35,7 @@ public class Controller {
         @Override
         public void run() {
             enterprise = userInputs.getEnterpriseCode();
-            frame.setEnterpriseCode(enterprise);
-            frame.setServicesList();
+            frame.setEnterpriseCode(enterprise);            
         }
 
     }
@@ -50,6 +49,8 @@ public class Controller {
         @Override
         public void run() {
             frame.setVisible(true);
+            frame.setServicesList();
+            frame.setStatesList();
         }
 
     }

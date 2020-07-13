@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import sci.insertbulkfiscalentries.Model.Entities.State;
 import sql.Database;
 
@@ -35,6 +36,8 @@ public class States_Model {
             states.put(state.getName(), state);
         }
         
+        //SortMap by key
+        states = new TreeMap<>(states);
         return states;
     }
 
