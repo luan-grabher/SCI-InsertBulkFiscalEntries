@@ -18,6 +18,7 @@ public class SCIInsertBulkFiscalEntries {
 
         List<Executavel> execs = new ArrayList<>();
         execs.add(controller.new setEnterprise());
+        execs.add(controller.new setDatabase());
         execs.add(controller.new showJframe());
         
         

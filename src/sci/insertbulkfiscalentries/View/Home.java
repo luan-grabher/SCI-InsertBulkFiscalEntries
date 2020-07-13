@@ -115,7 +115,6 @@ public class Home extends javax.swing.JFrame {
         titulo4.setLabelFor(cnpj);
         titulo4.setText("Valor");
 
-        service.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         service.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serviceActionPerformed(evt);
@@ -129,7 +128,6 @@ public class Home extends javax.swing.JFrame {
 
         value.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
-        state.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         state.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stateActionPerformed(evt);
@@ -141,7 +139,6 @@ public class Home extends javax.swing.JFrame {
         titulo6.setLabelFor(cnpj);
         titulo6.setText("Estado");
 
-        city.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         city.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cityActionPerformed(evt);

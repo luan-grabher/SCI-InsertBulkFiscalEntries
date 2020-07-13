@@ -1,8 +1,10 @@
 package sci.insertbulkfiscalentries.Control;
 
 import Entity.Executavel;
+import fileManager.FileManager;
 import sci.insertbulkfiscalentries.View.Home;
 import sci.insertbulkfiscalentries.View.UserInputs;
+import sql.Database;
 
 public class Controller {
 
@@ -11,6 +13,18 @@ public class Controller {
     private Home frame = new Home();
 
     private Integer enterprise;
+    
+    public class setDatabase extends Executavel{
+
+        public setDatabase() {
+            name = "Definindo banco de dados...";
+        }
+
+        @Override
+        public void run() {
+            Database.setStaticObject(new Database(FileManager.getFile("sci.cfg")));
+        }                        
+    }
 
     public class setEnterprise extends Executavel {
 
