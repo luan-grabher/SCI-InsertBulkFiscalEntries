@@ -4,6 +4,7 @@ import Entity.Executavel;
 import Executor.Execution;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sci.insertbulkfiscalentries.Control.Controller;
 
 public class SCIInsertBulkFiscalEntries {
@@ -13,20 +14,17 @@ public class SCIInsertBulkFiscalEntries {
         run();                      
     }
     
-    public static void run(){                
+    public static void run(){
         Controller controller = new Controller();
-
-        List<Executavel> execs = new ArrayList<>();
-        execs.add(controller.new setDatabase());
-        execs.add(controller.new setEnterprise());
-        execs.add(controller.new showJframe());
         
-        
-        Execution execution = new Execution("Iniciar Programa");
-        execution.setShowMessages(false);
-        execution.setExecutables(execs);
-        execution.runExecutables();
-        execution.endExecution(false);
+        try {
+            controller.new setDatabase().run();
+            controller.new setEnterprise().run();
+            controller.new showJframe().run(); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(controller.frame, "Erro: " + e.getMessage(), "Ocorreu um erro na execução!", 0);
+            System.exit(0);
+        }           
     }
     
 }

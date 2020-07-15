@@ -10,9 +10,9 @@ public class Controller {
 
     //Models
     private UserInputs userInputs = new UserInputs();
-    private Home frame = new Home();
+    public Home frame = new Home();
 
-    private Integer enterprise;
+    public Integer enterprise;
     
     public class setDatabase extends Executavel{
 
