@@ -23,6 +23,9 @@ public class Controller {
         @Override
         public void run() {
             Database.setStaticObject(new Database(FileManager.getFile("sci.cfg")));
+            if(!Database.getDatabase().testConnection()){
+                throw new Error("Não foi possível conectar ao banco de dados!");
+            }
         }                        
     }
 
