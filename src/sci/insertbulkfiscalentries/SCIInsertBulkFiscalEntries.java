@@ -20,8 +20,14 @@ public class SCIInsertBulkFiscalEntries {
         try {
             controller.new setDatabase().run();
             controller.new setEnterprise().run();
-            controller.new showJframe().run(); 
+            controller.new showJframe().run();
+            
         } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(controller.frame, "Erro: " + e.getMessage(), "Ocorreu um erro na execução!", 0);
+            System.exit(0);
+        } catch (Error e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(controller.frame, "Erro: " + e.getMessage(), "Ocorreu um erro na execução!", 0);
             System.exit(0);
         }           

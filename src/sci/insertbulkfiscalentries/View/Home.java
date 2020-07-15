@@ -43,6 +43,7 @@ public class Home extends javax.swing.JFrame {
 
         Services_Model model = new Services_Model();
         services = model.getDatabaseServices(enterpriseCode);
+        
         for (Map.Entry<String, Service> entry : services.entrySet()) {
             String name = entry.getKey();
             Service service = entry.getValue();
