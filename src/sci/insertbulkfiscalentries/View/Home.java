@@ -7,6 +7,7 @@ package sci.insertbulkfiscalentries.View;
 
 import java.util.Map;
 import java.util.TreeMap;
+import javax.print.DocFlavor;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -284,6 +285,22 @@ public class Home extends javax.swing.JFrame {
 
         date.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateActionPerformed(evt);
+            }
+        });
+        date.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dateKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dateKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dateKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -505,16 +522,13 @@ public class Home extends javax.swing.JFrame {
     private void generateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateFileActionPerformed
 
         //Inicia lista de Nfs
-        
         //Percorre tabela
         //  Cria objeto de NF
         //  Define os campos conforme as colunas na tabela
         //  Adiciona à lista de Nfs
-        
         //Inicia modelo de Movimentos de Serviço
         //Cria lista de movimentos de serviço com a lista de Nfs
         //Cria e pega arquivo de importação no modelo de movimentos de serviço
-        
         //Se arquivo estiver Ok
         //  Mostra mensagem para o usuário de onde o arquivo foi salvo
         //Se o aruqivo NÃO estiver ok
@@ -534,6 +548,35 @@ public class Home extends javax.swing.JFrame {
     private void cnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cnpjActionPerformed
+
+    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
+
+    }//GEN-LAST:event_dateActionPerformed
+
+    private void dateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateKeyPressed
+
+    }//GEN-LAST:event_dateKeyPressed
+
+    private void dateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateKeyTyped
+        //Pega tecla digitada
+        String key = "" + evt.getKeyChar();
+        String regex = "[0-9]";
+        
+        //Se a tecla nao for numero
+        if(!key.matches(regex) || date.getText().length() == 10){
+            //Define para em branco
+            evt.setKeyChar("".charAt(0));
+        }
+    }//GEN-LAST:event_dateKeyTyped
+
+    private void dateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateKeyReleased
+        //Se o texto tiver 2 ou 5 caracteres, coloca /
+        String text = date.getText();
+        int len = text.length();
+        if((len == 2 || len == 5) && !text.substring(len).equals("/")){
+            date.setText(date.getText() + "/");
+        }
+    }//GEN-LAST:event_dateKeyReleased
 
     /**
      * @param args the command line arguments
