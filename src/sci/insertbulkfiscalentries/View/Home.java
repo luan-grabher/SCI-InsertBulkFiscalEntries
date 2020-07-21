@@ -6,8 +6,6 @@
 package sci.insertbulkfiscalentries.View;
 
 import java.util.Map;
-import java.util.TreeMap;
-import javax.print.DocFlavor;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
