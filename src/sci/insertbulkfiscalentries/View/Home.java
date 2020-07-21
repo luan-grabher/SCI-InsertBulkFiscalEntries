@@ -43,7 +43,7 @@ public class Home extends javax.swing.JFrame {
 
         Services_Model model = new Services_Model();
         services = model.getDatabaseServices(enterpriseCode);
-        
+
         for (Map.Entry<String, Service> entry : services.entrySet()) {
             String name = entry.getKey();
             Service service = entry.getValue();
@@ -158,6 +158,7 @@ public class Home extends javax.swing.JFrame {
         titulo1.setText("SCI - Gerar arquivo de Importação de NFs de Serviço");
 
         cnpjSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sci/insertbulkfiscalentries/View/Images/search.png"))); // NOI18N
+        cnpjSearch.setEnabled(false);
         cnpjSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cnpjSearchActionPerformed(evt);
@@ -458,7 +459,7 @@ public class Home extends javax.swing.JFrame {
                     & !statesList.getSelectedItem().toString().equals("")
                     & !citiesList.getSelectedItem().toString().equals("")) {
                 //Verifica se NF já existe para aquele CNPJ
-                if(!ifCnpjNfOnTable(cnpj.getText(), nf.getText())){
+                if (!ifCnpjNfOnTable(cnpj.getText(), nf.getText())) {
                     DefaultTableModel model = (DefaultTableModel) table.getModel();
                     model.addRow(new Object[]{
                         cnpj.getText(),
@@ -470,7 +471,7 @@ public class Home extends javax.swing.JFrame {
                         statesList.getSelectedItem().toString(),
                         citiesList.getSelectedItem().toString()
                     });
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Já existe esta NF para este CNPJ!");
                 }
             } else {
@@ -486,14 +487,14 @@ public class Home extends javax.swing.JFrame {
         int rowCount = table.getRowCount();
         int cnpjCollumn = 0;
         int nfCollumn = 1;
-        
+
         //Unify
         String cnpjnf = cnpjSearched + nfSearched;
 
         // Check all entries
         for (int i = 0; i < rowCount; i++) {
             String rowValue = table.getValueAt(i, cnpjCollumn).toString() + table.getValueAt(i, nfCollumn).toString();
-            if(rowValue.equalsIgnoreCase(cnpjnf)){
+            if (rowValue.equalsIgnoreCase(cnpjnf)) {
                 return true;
             }
         }
@@ -502,7 +503,22 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void generateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateFileActionPerformed
-        // TODO add your handling code here:
+
+        //Inicia lista de Nfs
+        
+        //Percorre tabela
+        //  Cria objeto de NF
+        //  Define os campos conforme as colunas na tabela
+        //  Adiciona à lista de Nfs
+        
+        //Inicia modelo de Movimentos de Serviço
+        //Cria lista de movimentos de serviço com a lista de Nfs
+        //Cria e pega arquivo de importação no modelo de movimentos de serviço
+        
+        //Se arquivo estiver Ok
+        //  Mostra mensagem para o usuário de onde o arquivo foi salvo
+        //Se o aruqivo NÃO estiver ok
+        /// Mostra mensagem que ocorreu algum erro
     }//GEN-LAST:event_generateFileActionPerformed
 
     private void deleteRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRowActionPerformed
