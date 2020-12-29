@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 
 public class UserInputs {
-    public Integer getEnterpriseCode(){
+    public static Integer getEnterpriseCode(){
         try{
             return Integer.valueOf(JOptionPane.showInputDialog("Insira o número da empresa:"));
         }catch(Exception e){

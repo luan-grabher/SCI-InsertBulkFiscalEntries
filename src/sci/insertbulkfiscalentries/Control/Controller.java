@@ -9,7 +9,6 @@ import sql.Database;
 public class Controller {
 
     //Models
-    private UserInputs userInputs = new UserInputs();
     public Home frame = new Home();
 
     public Integer enterprise;
@@ -37,7 +36,7 @@ public class Controller {
 
         @Override
         public void run() {
-            enterprise = userInputs.getEnterpriseCode();
+            enterprise = UserInputs.getEnterpriseCode();
             frame.setEnterpriseCode(enterprise);            
         }
 
