@@ -7,13 +7,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import sci.insertbulkfiscalentries.Model.Entities.City;
 import sci.insertbulkfiscalentries.Model.Entities.State;
 import sql.Database;
 
 public class States_Model {
-    private Map<String, State> states = new HashMap<>();
     
-    public Map<String, State> getStatesFromDb(){
+    /**
+     * Retorna um mapa com os estados cadastrados no único
+     * @return mapa com os estados cadastrados no único
+     */
+    public static Map<String, State> getStatesFromDb(){
+        Map<String, State> states = new HashMap<>();
         //clear map
         states.clear();
         
@@ -41,11 +46,37 @@ public class States_Model {
         return states;
     }
 
-    public Map<String, State> getStates() {
-        return states;
-    }
+    
+    /**
+     * Retorna um mapa com as cidades do estado informado
+     * @param stateCode Código do estado no único
+     * @return mapa com as cidades do estado informado
+     */
+    public static Map<String, City> getStateCitiesFromDb(Integer stateCode) {
+        Map<String, City> cities = new HashMap<>();
 
-    public void setStates(Map<String, State> states) {
-        this.states = states;
-    }        
+        //Get Sql script
+        File sqlFile = FileManager.getFile("sql/getStateCities.sql");
+        Map<String, String> sqlChanges = new HashMap<>();
+        sqlChanges.put("coduf", stateCode.toString());
+
+        //Get list of database states
+        ArrayList<String[]> databaseCities = Database.getDatabase().select(sqlFile, sqlChanges);
+
+        //Percorre todos estados do banco
+        for (String[] databaseCity : databaseCities) {
+            //Cria objeto
+            City city = new City();
+            city.setCode(Integer.valueOf(databaseCity[0]));
+            city.setName(databaseCity[2]);
+
+            //Adiciona objeto no mapa
+            cities.put(city.getName(), city);
+        }
+
+        //Sort results
+        cities = new TreeMap<>(cities);
+        
+        return cities;
+    }
 }

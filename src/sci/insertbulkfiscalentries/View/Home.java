@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sci.insertbulkfiscalentries.Model.Cities_Model;
 import sci.insertbulkfiscalentries.Model.Entities.City;
 import sci.insertbulkfiscalentries.Model.Entities.Service;
 import sci.insertbulkfiscalentries.Model.Entities.State;
@@ -54,8 +53,7 @@ public class Home extends javax.swing.JFrame {
     public void setStatesList() {
         statesList.removeAllItems();
 
-        States_Model model = new States_Model();
-        states = model.getStatesFromDb();
+        states = States_Model.getStatesFromDb();
         for (Map.Entry<String, State> entry : states.entrySet()) {
             String name = entry.getKey();
             State state = entry.getValue();
@@ -69,8 +67,7 @@ public class Home extends javax.swing.JFrame {
     public void setCitiesList() {
         citiesList.removeAllItems();
 
-        Cities_Model model = new Cities_Model();
-        cities = model.getStateCitiesFromDb(states.get(statesList.getSelectedItem().toString()).getCode());
+        cities = States_Model.getStateCitiesFromDb(states.get(statesList.getSelectedItem().toString()).getCode());
         for (Map.Entry<String, City> entry : cities.entrySet()) {
             String name = entry.getKey();
             City city = entry.getValue();
