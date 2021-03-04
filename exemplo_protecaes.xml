@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<CompNfse xmlns="http://www.abrasf.org.br/nfse.xsd">
+   <Nfse xmlns="http://www.abrasf.org.br/nfse.xsd" versao="1.00">
+      <InfNfse Id="nfse">
+         <Numero>:nf</Numero>
+         <CodigoVerificacao></CodigoVerificacao>
+         <DataEmissao>:dataT00:00:00</DataEmissao><!--FORMATO: yyyy-MM-ddT00:00:00-->
+         <IdentificacaoRps>
+            <Numero></Numero>
+            <Serie></Serie>
+            <Tipo></Tipo>
+         </IdentificacaoRps>
+         <DataEmissaoRps>:data</DataEmissaoRps>
+         <NaturezaOperacao>2</NaturezaOperacao>
+         <OptanteSimplesNacional>2</OptanteSimplesNacional>
+         <IncentivadorCultural>2</IncentivadorCultural>
+         <Competencia>:dataT14:28:56</Competencia>
+         <Servico>
+            <Valores>
+               <ValorServicos>:valor</ValorServicos>
+               <ValorDeducoes>0.00</ValorDeducoes>
+               <ValorPis>:pis</ValorPis>
+               <ValorCofins>:cofins</ValorCofins>
+               <ValorInss>0.00</ValorInss>
+               <ValorIr>:ir</ValorIr>
+               <ValorCsll>:csll</ValorCsll>
+               <IssRetido>1</IssRetido>
+               <ValorIss>:iss</ValorIss>
+               <ValorIssRetido>:issRetido</ValorIssRetido>
+               <OutrasRetencoes>0.00</OutrasRetencoes>
+               <BaseCalculo>:valor</BaseCalculo>
+               <Aliquota>:aliquota</Aliquota>
+               <ValorLiquidoNfse>:valorLiquido</ValorLiquidoNfse>
+               <DescontoIncondicionado>0.00</DescontoIncondicionado>
+               <DescontoCondicionado>0.00</DescontoCondicionado>
+            </Valores>
+            <ItemListaServico></ItemListaServico>
+            <CodigoTributacaoMunicipio></CodigoTributacaoMunicipio>
+            <Discriminacao>:discriminacao</Discriminacao>
+            <CodigoMunicipio></CodigoMunicipio>
+         </Servico>
+         <PrestadorServico>
+            <IdentificacaoPrestador>
+               <Cnpj>:prestadorCnpj</Cnpj>
+               <InscricaoMunicipal></InscricaoMunicipal>
+            </IdentificacaoPrestador>
+            <RazaoSocial>:prestadorRazaoSocial</RazaoSocial>
+            <Endereco>
+               <Endereco></Endereco>
+               <Numero></Numero>
+               <Complemento></Complemento>
+               <Bairro></Bairro>
+               <CodigoMunicipio></CodigoMunicipio>
+               <Uf></Uf>
+               <Cep></Cep>
+            </Endereco>
+         </PrestadorServico>
+         <TomadorServico>
+            <IdentificacaoTomador>
+               <CpfCnpj>
+                  <Cnpj>:tomadorCnpj</Cnpj>
+               </CpfCnpj>
+            </IdentificacaoTomador>
+            <RazaoSocial></RazaoSocial>
+            <Endereco>
+               <Endereco></Endereco>
+               <Numero></Numero>
+               <Bairro></Bairro>
+               <CodigoMunicipio></CodigoMunicipio>
+               <Uf></Uf>
+               <Cep></Cep>
+            </Endereco>
+         </TomadorServico>
+         <OrgaoGerador>
+            <CodigoMunicipio></CodigoMunicipio>
+            <Uf></Uf>
+         </OrgaoGerador>
+      </InfNfse>
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="NfseAssSMF_nfse">
+         <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="#nfse">
+               <Transforms>
+                  <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                  <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+               </Transforms>
+               <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+               <DigestValue></DigestValue>
+            </Reference>
+         </SignedInfo>
+         <SignatureValue></SignatureValue>
+         <KeyInfo>
+            <X509Data>
+               <X509Certificate></X509Certificate>
+            </X509Data>
+         </KeyInfo>
+      </Signature>
+   </Nfse>
+</CompNfse>

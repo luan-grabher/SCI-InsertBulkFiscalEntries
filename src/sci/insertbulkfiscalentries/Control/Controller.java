@@ -2,58 +2,38 @@ package sci.insertbulkfiscalentries.Control;
 
 import Entity.Executavel;
 import fileManager.FileManager;
-import sci.insertbulkfiscalentries.View.Home;
-import sci.insertbulkfiscalentries.View.UserInputs;
+import java.io.File;
+import sci.insertbulkfiscalentries.Model.FiscalNotesFile;
 import sql.Database;
 
 public class Controller {
-
-    //Models
-    public Home frame = new Home();
-
-    public Integer enterprise;
     
-    public class setDatabase extends Executavel{
+    public Integer enterprise;
 
-        public setDatabase() {
-            name = "Definindo banco de dados...";
-        }
+    public class setDatabase extends Executavel {
 
         @Override
         public void run() {
             Database.setStaticObject(new Database(FileManager.getFile("sci.cfg")));
-            if(!Database.getDatabase().testConnection()){
+            if (!Database.getDatabase().testConnection()) {
                 throw new Error("Não foi possível conectar ao banco de dados!");
             }
-        }                        
+        }
     }
 
-    public class setEnterprise extends Executavel {
+    public class convertFiscalNotesMapToXml extends Executavel {
 
-        public setEnterprise() {
-            name = "Definindo número de empresa.";
+        private File file;
+
+        public convertFiscalNotesMapToXml(File file) {
+            this.file = file;
         }
 
         @Override
         public void run() {
-            enterprise = UserInputs.getEnterpriseCode();
-            frame.setEnterpriseCode(enterprise);            
+            FiscalNotesFile.getFiscalNotes(file);
+            FiscalNotesFile.createXmlOfFiscalNotes();
         }
-
     }
 
-    public class showJframe extends Executavel {
-
-        public showJframe() {
-            name = "Exibindo o JFrame";
-        }
-
-        @Override
-        public void run() {
-            frame.setVisible(true);
-            frame.setServicesList();
-            frame.setStatesList();
-        }
-
-    }
 }
