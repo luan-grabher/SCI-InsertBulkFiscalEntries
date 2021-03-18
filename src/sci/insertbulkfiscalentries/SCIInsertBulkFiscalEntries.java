@@ -19,7 +19,7 @@ public class SCIInsertBulkFiscalEntries {
         //String iniPath = "\\\\heimerdinger\\docs\\Informatica\\Programas\\Moresco\\01 - Programas\\";
         String iniName = Args.get(args, "ini");
 
-        iniName = ""; //Para testes pega o .ini da pasta do programa
+        //iniName = ""; //Para testes pega o .ini da pasta do programa
 
         if (!iniName.equals(null)) {
             try {
@@ -27,8 +27,12 @@ public class SCIInsertBulkFiscalEntries {
 
                 //Pega arquivo XLSX com Notas
                 JOptionPane.showMessageDialog(null, "Escolha o arquivo Excel com as notas para serem importadas:");
-                File file = Selector.selectFile("", "Excel XLSX", ".xslx");
-                run(file);
+                File file = Selector.selectFile("", "Excel XLSX", ".xlsx");
+                if(file != null){
+                    run(file);
+                }else{
+                    throw new Error("Arquivo inválido!");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
             } catch (Error e) {

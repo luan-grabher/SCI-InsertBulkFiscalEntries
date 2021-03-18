@@ -49,6 +49,12 @@ public class FiscalNotesFile {
             xmlString[0] = xmlString[0].replaceAll(":tomadorCnpj", cnpj);
 
             //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
+            String prestadorRazao = "";
+            Map<String, String> prestadorInfo=  CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
+            if(prestadorInfo != null){
+                prestadorRazao = prestadorInfo.get("Nome da empresa");
+            }
+            xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestadorRazao);
             
             //--Percorre colunas
             map.forEach((name, val) -> {
