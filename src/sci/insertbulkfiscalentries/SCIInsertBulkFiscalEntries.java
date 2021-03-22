@@ -6,6 +6,7 @@ import fileManager.Args;
 import fileManager.FileManager;
 import fileManager.Selector;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ public class SCIInsertBulkFiscalEntries {
 
     public static void main(String[] args) {
         //String iniPath = "\\\\heimerdinger\\docs\\Informatica\\Programas\\Moresco\\01 - Programas\\";
-        String iniName = Args.get(args, "ini");
+        String iniName = Args.get(args, "ini") == null?"": Args.get(args, "ini");
 
         //iniName = ""; //Para testes pega o .ini da pasta do programa
         if (null != iniName) {
@@ -46,7 +47,11 @@ public class SCIInsertBulkFiscalEntries {
                         throw new Error("Arquivo inválido!");
                     }
                 } else {
-                    System.out.println("Ira salvar parceiro");
+                    File file = new File("Exemplo Inserir NFs.xlsx");
+                    File copyFile = new File(System.getProperty("user.home") + "\\Desktop\\Exemplo Inserir NFs.xlsx");
+                    Files.copy(file.toPath(), copyFile.toPath());
+                    
+                    JOptionPane.showMessageDialog(null, "Arquivo salvo em: "+ copyFile.getPath());
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
