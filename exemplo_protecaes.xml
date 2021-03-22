@@ -14,7 +14,7 @@
          <NaturezaOperacao>2</NaturezaOperacao>
          <OptanteSimplesNacional>2</OptanteSimplesNacional>
          <IncentivadorCultural>2</IncentivadorCultural>
-         <Competencia>:dataT14:28:56</Competencia>
+         <Competencia>:dataT00:00:00</Competencia>
          <Servico>
             <Valores>
                <ValorServicos>:valor</ValorServicos>
@@ -30,7 +30,7 @@
                <OutrasRetencoes>0.00</OutrasRetencoes>
                <BaseCalculo>:valor</BaseCalculo>
                <Aliquota>:aliquota</Aliquota>
-               <ValorLiquidoNfse>:valorLiquido</ValorLiquidoNfse>
+               <ValorLiquidoNfse>:liquido</ValorLiquidoNfse>
                <DescontoIncondicionado>0.00</DescontoIncondicionado>
                <DescontoCondicionado>0.00</DescontoCondicionado>
             </Valores>

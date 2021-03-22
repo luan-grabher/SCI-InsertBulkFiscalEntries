@@ -20,7 +20,7 @@ public class SCIInsertBulkFiscalEntries {
         //String iniPath = "\\\\heimerdinger\\docs\\Informatica\\Programas\\Moresco\\01 - Programas\\";
         String iniName = Args.get(args, "ini");
 
-        iniName = ""; //Para testes pega o .ini da pasta do programa
+        //iniName = ""; //Para testes pega o .ini da pasta do programa
         if (null != iniName) {
             try {
                 ini = new Ini(FileManager.getFile(iniName + ".ini"));

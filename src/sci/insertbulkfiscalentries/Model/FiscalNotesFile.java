@@ -1,10 +1,12 @@
 package sci.insertbulkfiscalentries.Model;
 
+import Dates.Dates;
 import JExcel.XLSX;
 import fileManager.FileManager;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import static sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries.ini;
@@ -18,11 +20,15 @@ public class FiscalNotesFile {
     public static void getFiscalNotes(File file) {
         FiscalNotesFile.file = file;
 
-        Map<String, Map<String, String>> config = new HashMap<>();
+        Map<String, Map<String, String>> config = new LinkedHashMap<>();
 
         config.put("prestadorCnpj", XLSX.convertStringToConfig("cnpj", ini.get("Colunas", "cnpj")));
         config.put("nf", XLSX.convertStringToConfig("nf", ini.get("Colunas", "nf")));
         config.put("data", XLSX.convertStringToConfig("data", ini.get("Colunas", "data")));
+
+        /*Valor liquido antes do valor por causa das substituições*/
+        config.put("liquido", XLSX.convertStringToConfig("liquido", ini.get("Colunas", "liquido")));
+
         config.put("valor", XLSX.convertStringToConfig("valor", ini.get("Colunas", "valor")));
         config.put("discriminacao", XLSX.convertStringToConfig("discriminacao", ini.get("Colunas", "discriminacao")));
         config.put("pis", XLSX.convertStringToConfig("pis", ini.get("Colunas", "pis")));
@@ -32,7 +38,6 @@ public class FiscalNotesFile {
         config.put("iss", XLSX.convertStringToConfig("iss", ini.get("Colunas", "iss")));
         config.put("issRetido", XLSX.convertStringToConfig("issRetido", ini.get("Colunas", "issRetido")));
         config.put("aliquota", XLSX.convertStringToConfig("aliquota", ini.get("Colunas", "aliquota")));
-        config.put("valorLiquido", XLSX.convertStringToConfig("valorLiquido", ini.get("Colunas", "valorLiquido")));
 
         fiscalNotes = XLSX.get(file, config);
     }
@@ -50,16 +55,23 @@ public class FiscalNotesFile {
 
             //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
             String prestadorRazao = "";
-            Map<String, String> prestadorInfo=  CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
-            if(prestadorInfo != null){
+            Map<String, String> prestadorInfo = CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
+            if (prestadorInfo != null) {
                 prestadorRazao = prestadorInfo.get("Nome da empresa");
             }
             xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestadorRazao);
-            
+
             //--Percorre colunas
             map.forEach((name, val) -> {
+                String str = val.toString();
+
+                //Converte a data se for data
+                if (str.startsWith("java.util.GregorianCalendar")) {
+                    str = Dates.getCalendarInThisStringFormat((Calendar) val, "yyyy-MM-dd");
+                }
+
                 //----Para cada coluna da replace no valor
-                xmlString[0] = xmlString[0].replaceAll(":" + name, (String) val);
+                xmlString[0] = xmlString[0].replaceAll(":" + name, str);
             });
 
             //--Salva arquivo xml com nome da nota e cnpj na mesma pasta do arquivo excel
