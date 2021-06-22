@@ -31,8 +31,8 @@ public class Controller {
 
         @Override
         public void run() {
-            FiscalNotesFile.getFiscalNotes(file);
-            FiscalNotesFile.createXmlOfFiscalNotes();
+                FiscalNotesFile.getFiscalNotes(file);
+                FiscalNotesFile.createXmlOfFiscalNotes();
         }
     }
 

@@ -50,7 +50,7 @@
                <Numero>:prestadorRuaNumero</Numero>
                <Complemento></Complemento>
                <Bairro>:prestadorBairro</Bairro>
-               <CodigoMunicipio></CodigoMunicipio>
+               <CodigoMunicipio>:prestadorMunicipio</CodigoMunicipio>
                <Uf>:prestadorUF</Uf>
                <Cep>:prestadorCEP</Cep>
             </Endereco>

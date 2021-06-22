@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.ini4j.Ini;
+import org.ini4j.Profile.Section;
 import static sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries.ini;
 
 public class FiscalNotesFile {
@@ -44,51 +46,61 @@ public class FiscalNotesFile {
     }
 
     public static void createXmlOfFiscalNotes() {
-        //Pega cnpj da empresa
-        String cnpj = ini.get("Config", "cnpj");
+        try {
+            //Municipios
+            Section municipios = (Section) (new Ini(FileManager.getFile("municipios.ini"))).get("codigos");
 
-        //Percorre todas nfs
-        fiscalNotes.forEach((map) -> {
-            //Pega texto xml padrao
-            String[] xmlString = new String[]{defaultStringXml};
+            //Pega cnpj da empresa
+            String cnpj = ini.get("Config", "cnpj");
 
-            xmlString[0] = xmlString[0].replaceAll(":tomadorCnpj", cnpj);
+            //Percorre todas nfs
+            fiscalNotes.forEach((map) -> {
+                //Pega texto xml padrao
+                String[] xmlString = new String[]{defaultStringXml};
 
-            //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
-            Map<String,String> prestador = new HashMap<>();
-            Map<String, String> prestadorInfo = CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
-            if (prestadorInfo != null) {
-                prestador.put("RazaoSocial", prestadorInfo.get("Nome da empresa"));
-                prestador.put("Rua", prestadorInfo.get("Rua"));
-                prestador.put("RuaNumero", prestadorInfo.get("Rua numero"));
-                prestador.put("Bairro", prestadorInfo.get("Bairro"));
-                prestador.put("UF", prestadorInfo.get("UF"));
-                prestador.put("CEP", prestadorInfo.get("CEP"));
+                xmlString[0] = xmlString[0].replaceAll(":tomadorCnpj", cnpj);
 
-            }
-            xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestador.getOrDefault("RazaoSocial", ""));
-            xmlString[0] = xmlString[0].replaceAll(":prestadorRua", prestador.getOrDefault("Rua",""));
-            xmlString[0] = xmlString[0].replaceAll(":prestadorRuaNumero", prestador.getOrDefault("Rua numero",""));
-            xmlString[0] = xmlString[0].replaceAll(":prestadorBairro", prestador.getOrDefault("Bairro",""));
-            xmlString[0] = xmlString[0].replaceAll(":prestadorUF", prestador.getOrDefault("UF",""));
-            xmlString[0] = xmlString[0].replaceAll(":prestadorCEP", prestador.getOrDefault("CEP",""));
+                //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
+                Map<String, String> prestador = new HashMap<>();
+                Map<String, String> prestadorInfo = CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
+                if (prestadorInfo != null) {
+                    prestador.put("RazaoSocial", prestadorInfo.get("Nome da empresa"));
+                    prestador.put("Rua", prestadorInfo.get("Rua"));
+                    prestador.put("RuaNumero", prestadorInfo.get("Rua numero"));
+                    prestador.put("Bairro", prestadorInfo.get("Bairro"));
+                    prestador.put("UF", prestadorInfo.get("UF"));
+                    prestador.put("CEP", prestadorInfo.get("CEP"));
+                    prestador.put("Cidade", prestadorInfo.get("Cidade"));
 
-            //--Percorre colunas
-            map.forEach((name, val) -> {
-                String str = val.toString();
-
-                //Converte a data se for data
-                if (str.startsWith("java.util.GregorianCalendar")) {
-                    str = Dates.getCalendarInThisStringFormat((Calendar) val, "yyyy-MM-dd");
                 }
 
-                //----Para cada coluna da replace no valor
-                xmlString[0] = xmlString[0].replaceAll(":" + name, str);
+                xmlString[0] = xmlString[0].replaceAll(":prestadorMunicipio", (String) municipios.getOrDefault(prestador.getOrDefault("Cidade", ""), ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestador.getOrDefault("RazaoSocial", ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorRuaNumero", prestador.getOrDefault("RuaNumero", ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorRua", prestador.getOrDefault("Rua", ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorBairro", prestador.getOrDefault("Bairro", ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorUF", prestador.getOrDefault("UF", ""));
+                xmlString[0] = xmlString[0].replaceAll(":prestadorCEP", prestador.getOrDefault("CEP", ""));
+
+                //--Percorre colunas
+                map.forEach((name, val) -> {
+                    String str = val.toString();
+
+                    //Converte a data se for data
+                    if (str.startsWith("java.util.GregorianCalendar")) {
+                        str = Dates.getCalendarInThisStringFormat((Calendar) val, "yyyy-MM-dd");
+                    }
+
+                    //----Para cada coluna da replace no valor
+                    xmlString[0] = xmlString[0].replaceAll(":" + name, str);
+                });
+
+                //--Salva arquivo xml com nome da nota e cnpj na mesma pasta do arquivo excel
+                FileManager.save(file.getParent() + "\\" + (String) map.get("nf") + ".xml", xmlString[0]);
             });
 
-            //--Salva arquivo xml com nome da nota e cnpj na mesma pasta do arquivo excel
-            FileManager.save(file.getParent() + "\\" + (String) map.get("nf") + ".xml", xmlString[0]);
-        });
-
+        } catch (Exception e) {
+            throw new Error(e);
+        }
     }
 }
