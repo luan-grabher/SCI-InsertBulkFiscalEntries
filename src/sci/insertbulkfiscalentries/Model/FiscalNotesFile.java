@@ -6,6 +6,7 @@ import fileManager.FileManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +55,23 @@ public class FiscalNotesFile {
             xmlString[0] = xmlString[0].replaceAll(":tomadorCnpj", cnpj);
 
             //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
-            String prestadorRazao = "";
+            Map<String,String> prestador = new HashMap<>();
             Map<String, String> prestadorInfo = CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
             if (prestadorInfo != null) {
-                prestadorRazao = prestadorInfo.get("Nome da empresa");
+                prestador.put("RazaoSocial", prestadorInfo.get("Nome da empresa"));
+                prestador.put("Rua", prestadorInfo.get("Rua"));
+                prestador.put("RuaNumero", prestadorInfo.get("Rua numero"));
+                prestador.put("Bairro", prestadorInfo.get("Bairro"));
+                prestador.put("UF", prestadorInfo.get("UF"));
+                prestador.put("CEP", prestadorInfo.get("CEP"));
+
             }
-            xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestadorRazao);
+            xmlString[0] = xmlString[0].replaceAll(":prestadorRazaoSocial", prestador.getOrDefault("RazaoSocial", ""));
+            xmlString[0] = xmlString[0].replaceAll(":prestadorRua", prestador.getOrDefault("Rua",""));
+            xmlString[0] = xmlString[0].replaceAll(":prestadorRuaNumero", prestador.getOrDefault("Rua numero",""));
+            xmlString[0] = xmlString[0].replaceAll(":prestadorBairro", prestador.getOrDefault("Bairro",""));
+            xmlString[0] = xmlString[0].replaceAll(":prestadorUF", prestador.getOrDefault("UF",""));
+            xmlString[0] = xmlString[0].replaceAll(":prestadorCEP", prestador.getOrDefault("CEP",""));
 
             //--Percorre colunas
             map.forEach((name, val) -> {

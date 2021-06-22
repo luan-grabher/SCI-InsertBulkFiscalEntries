@@ -46,13 +46,13 @@
             </IdentificacaoPrestador>
             <RazaoSocial>:prestadorRazaoSocial</RazaoSocial>
             <Endereco>
-               <Endereco></Endereco>
-               <Numero></Numero>
+               <Endereco>:prestadorRua</Endereco>
+               <Numero>:prestadorRuaNumero</Numero>
                <Complemento></Complemento>
-               <Bairro></Bairro>
+               <Bairro>:prestadorBairro</Bairro>
                <CodigoMunicipio></CodigoMunicipio>
-               <Uf></Uf>
-               <Cep></Cep>
+               <Uf>:prestadorUF</Uf>
+               <Cep>:prestadorCEP</Cep>
             </Endereco>
          </PrestadorServico>
          <TomadorServico>
