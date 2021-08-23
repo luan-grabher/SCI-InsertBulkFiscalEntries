@@ -16,6 +16,7 @@ import sci.insertbulkfiscalentries.Control.Controller;
 public class SCIInsertBulkFiscalEntries {
 
     public static Ini ini = null;
+    public static StringBuilder cnpjErrors = new StringBuilder();
 
     public static void main(String[] args) {
         //String iniPath = "\\\\heimerdinger\\docs\\Informatica\\Programas\\Moresco\\01 - Programas\\";
@@ -72,6 +73,7 @@ public class SCIInsertBulkFiscalEntries {
             Map<String, Executavel> execs = new LinkedHashMap<>();
             //execs.put("Conectando ao banco de dados", controller.new setDatabase());
             execs.put("Criar xml das notas do arquivo", controller.new convertFiscalNotesMapToXml(file));
+            execs.put("Verificando erros de CNPJ", controller.new verifyCNPJErros(file));
 
             exec.setExecutionMap(execs);
             exec.runExecutables();

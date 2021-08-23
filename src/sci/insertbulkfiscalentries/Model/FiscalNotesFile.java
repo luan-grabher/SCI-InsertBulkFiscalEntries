@@ -1,5 +1,6 @@
 package sci.insertbulkfiscalentries.Model;
 
+import CNPJ.CNPJ;
 import Dates.Dates;
 import JExcel.XLSX;
 import fileManager.FileManager;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import org.ini4j.Ini;
 import org.ini4j.Profile.Section;
+import static sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries.cnpjErrors;
 import static sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries.ini;
 
 public class FiscalNotesFile {
@@ -54,7 +56,7 @@ public class FiscalNotesFile {
             String cnpj = ini.get("Config", "cnpj");
 
             //Percorre todas nfs
-            fiscalNotes.forEach((map) -> {
+            fiscalNotes.forEach((map) -> {                
                 //Pega texto xml padrao
                 String[] xmlString = new String[]{defaultStringXml};
 
@@ -62,7 +64,7 @@ public class FiscalNotesFile {
 
                 //Buscar com API a razao social do CNPJ :prestadorRazaoSocial
                 Map<String, String> prestador = new HashMap<>();
-                Map<String, String> prestadorInfo = CNPJ.CNPJ.get((String) map.get("prestadorCnpj"));
+                Map<String, String> prestadorInfo = CNPJ.get((String) map.get("prestadorCnpj"));
                 if (prestadorInfo != null) {
                     prestador.put("RazaoSocial", prestadorInfo.get("Nome da empresa"));
                     prestador.put("Rua", prestadorInfo.get("Rua"));
@@ -72,6 +74,8 @@ public class FiscalNotesFile {
                     prestador.put("CEP", prestadorInfo.get("CEP"));
                     prestador.put("Cidade", prestadorInfo.get("Cidade"));
 
+                }else{
+                    cnpjErrors.append("\r\n").append(cnpj);
                 }
 
                 xmlString[0] = xmlString[0].replaceAll(":prestadorMunicipio", (String) municipios.getOrDefault(prestador.getOrDefault("Cidade", ""), ""));
