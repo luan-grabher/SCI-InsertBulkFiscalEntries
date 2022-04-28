@@ -75,7 +75,7 @@ public class FiscalNotesFile {
                     prestador.put("Cidade", prestadorInfo.get("Cidade"));
 
                 }else{
-                    cnpjErrors.append("\r\n").append(cnpj);
+                    cnpjErrors.append("\r\n").append((String) map.get("prestadorCnpj"));
                 }
 
                 xmlString[0] = xmlString[0].replaceAll(":prestadorMunicipio", (String) municipios.getOrDefault(prestador.getOrDefault("Cidade", ""), ""));
