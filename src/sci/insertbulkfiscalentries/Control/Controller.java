@@ -5,24 +5,11 @@ import fileManager.FileManager;
 import java.io.File;
 import javax.swing.JOptionPane;
 import sci.insertbulkfiscalentries.Model.FiscalNotesFile;
-import sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries;
 import static sci.insertbulkfiscalentries.SCIInsertBulkFiscalEntries.cnpjErrors;
-import sql.Database;
 
 public class Controller {
     
     public Integer enterprise;
-
-    public class setDatabase extends Executavel {
-
-        @Override
-        public void run() {
-            Database.setStaticObject(new Database(FileManager.getFile("sci.cfg")));
-            if (!Database.getDatabase().testConnection()) {
-                throw new Error("Não foi possível conectar ao banco de dados!");
-            }
-        }
-    }
 
     public class convertFiscalNotesMapToXml extends Executavel {
 

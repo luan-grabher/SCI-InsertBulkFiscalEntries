@@ -1,0 +1,9 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\luan\\Documents\\Projetos\\Moresco\\Jar-Vendors\\ini4j-0.5.4-jdk14.jar",
+        "c:\\Users\\luan\\Documents\\Projetos\\Moresco\\JExcel\\JExcel.jar",
+        "c:\\Users\\luan\\Documents\\Projetos\\Moresco\\Executor\\Executor.jar",
+        "c:\\Users\\luan\\Documents\\Projetos\\Moresco\\Lib-CNPJ\\Lib-CNPJ.jar"
+    ]
+}

@@ -20,7 +20,7 @@ public class FiscalNotesFile {
 
     private static List<Map<String, Object>> fiscalNotes = new ArrayList<>();
     private static File file;
-    private static final String defaultStringXml = FileManager.getText(FileManager.getFile(ini.get("Config", "defaultXml")));
+    private static final String defaultStringXml = FileManager.getText(FileManager.getFile("insertBulkFiscalEntries.xml"));
 
     public static void getFiscalNotes(File file) {
         FiscalNotesFile.file = file;
@@ -88,6 +88,8 @@ public class FiscalNotesFile {
 
                 //--Percorre colunas
                 map.forEach((name, val) -> {
+                    val = val == null ? "" : val;
+
                     String str = val.toString();
 
                     //Converte a data se for data
