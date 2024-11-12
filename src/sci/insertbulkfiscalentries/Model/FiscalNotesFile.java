@@ -102,7 +102,14 @@ public class FiscalNotesFile {
                 });
 
                 //--Salva arquivo xml com nome da nota e cnpj na mesma pasta do arquivo excel
-                FileManager.save(file.getParent() + "\\" + (String) map.get("nf") + ".xml", xmlString[0]);
+                String cnpjPrestador = (String) map.get("prestadorCnpj");
+                String cnpjTomardor = cnpj;
+
+                String nomeArquivoXML = (String) map.get("nf") + "_T" + cnpjTomardor + ".xml";
+                String caminhoArquivoXML = file.getParent() + "\\" + nomeArquivoXML;
+                String textoArquivoXML = xmlString[0];
+
+                FileManager.save(caminhoArquivoXML, textoArquivoXML);
             });
 
         } catch (Exception e) {
